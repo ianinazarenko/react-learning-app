@@ -1,4 +1,9 @@
-/node_modules
+# dependencies
+**/node_modules
 
 # VSCode
 /.vscode
+
+# folders
+/boilerplate
+/bp-react

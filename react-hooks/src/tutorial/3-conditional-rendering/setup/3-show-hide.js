@@ -19,33 +19,26 @@ const ShowHide = () => {
 };
 
 const Item = () => {
+    const [size, setSize] = useState(window.innerWidth);
+    const changeSize = () => {
+        setSize(window.innerWidth);
+    };
+
+    useEffect(() => {
+        console.log("useEfect");
+        window.addEventListener("resize", changeSize);
+        return () => {
+            console.log("cleanUP");
+            window.removeEventListener("resize", changeSize);
+        };
+    }, []);
+
     return (
         <div style={{ marginTop: "2rem" }}>
             <h1>window</h1>
-            <h2>size:</h2>
+            <h2>size: {size} PX</h2>
         </div>
     );
 };
-
-class User {
-    constructor(name, job = "admin") {
-        this.name = name;
-        this.job = job;
-    }
-}
-
-class Admin extends User {
-    constructor(name, isAdmin) {
-        super();
-        this.isAdmin = isAdmin;
-        // this.name = name;
-    }
-}
-
-const user1 = new User("Jake", "farmer");
-const admin1 = new Admin("Tom", true);
-
-console.log(user1);
-console.log(admin1);
 
 export default ShowHide;

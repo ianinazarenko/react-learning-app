@@ -7,7 +7,6 @@ const Review = () => {
     const { name, job, image, text } = people[index];
 
     const checkIndex = (num) => {
-        console.log(`in checkIndex: ${index}`);
         if (num < 0) {
             return people.length - 1;
         } else if (num > people.length - 1) {
@@ -15,16 +14,7 @@ const Review = () => {
         } else return num;
     };
 
-    // console.log(`in component: ${index}`);
-    console.log("_______");
-
     const prevPerson = () => {
-        console.log(`in prevPerson: ${index}`);
-        // if (index < 0) {
-        //     setIndex(people.length - 1);
-        // } else {
-        //     setIndex(index - 1);
-        // }
         setIndex(() => checkIndex(index - 1));
     };
 

@@ -7,7 +7,7 @@ function App() {
     const [jobs, setJobs] = useState([]);
     const [value, setValue] = useState(0);
 
-    const fetchJobs = async () => {
+    const fetchJobs = () => {
         fetch(url)
             .then((response) => {
                 if (response.ok) {
@@ -17,8 +17,8 @@ function App() {
                 }
             })
             .then((data) => {
-                setLoading(false);
                 setJobs(data);
+                setLoading(false);
             })
             .catch((err) => console.log(err));
     };
@@ -36,10 +36,7 @@ function App() {
         );
     }
 
-    console.log("After loading");
-    console.log(jobs);
-    console.log(jobs[value]);
-    // const { company, dates, duties, id, order, title } = jobs[value];
+    const { company, dates, duties, id, order, title } = jobs[value];
 
     return (
         <section className="section">
@@ -47,8 +44,23 @@ function App() {
                 <h2>experience</h2>
                 <div className="underline"></div>
             </div>
-            <div className="jobs-container">
+            <div className="jobs-center">
                 {/* btns */}
+                <div className="btn-container">
+                    {jobs.map((job, index) => {
+                        return (
+                            <button
+                                key={index}
+                                className={`job-btn ${
+                                    index === value && "active-btn"
+                                }`}
+                                onClick={() => setValue(index)}
+                            >
+                                {job.company}
+                            </button>
+                        );
+                    })}
+                </div>
                 {/* jobs-info */}
                 <article className="job-info">
                     <h3>{title}</h3>

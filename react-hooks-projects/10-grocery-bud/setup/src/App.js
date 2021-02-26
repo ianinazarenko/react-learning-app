@@ -2,9 +2,16 @@ import React, { useState, useEffect } from "react";
 import List from "./List";
 import Alert from "./Alert";
 
+const getLocalStorage = () => {
+    const list = localStorage.getItem("list");
+
+    if (list) return JSON.parse(list);
+    return [];
+};
+
 function App() {
     const [name, setName] = useState("");
-    const [list, setList] = useState([]);
+    const [list, setList] = useState(getLocalStorage());
     const [isEditing, setIsEditig] = useState(false);
     const [editID, setEditID] = useState(null);
     const [alert, setAlert] = useState({
@@ -38,10 +45,21 @@ function App() {
         e.preventDefault();
         console.log("submit");
         if (!name) {
-            // set alert
             showAlert(true, "danger", "please enter value");
         } else if (name && isEditing) {
             // deal with editing
+            setList(
+                list.map((item) => {
+                    if (item.id === editID) {
+                        return { ...item, title: name };
+                    }
+                    return item;
+                })
+            );
+            setName("");
+            setEditID(null);
+            setIsEditig(false);
+            showAlert(true, "success", "value changed");
         } else {
             showAlert(true, "success", "item added to the list");
             const newItem = {
@@ -52,6 +70,10 @@ function App() {
             setName("");
         }
     };
+
+    useEffect(() => {
+        localStorage.setItem("list", JSON.stringify(list));
+    }, [list]);
 
     return (
         <section className="section-center">

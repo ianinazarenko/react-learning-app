@@ -10,9 +10,15 @@ import ErrorBoundary from './ErrorBoundary';
 ReactDOM.render(
   <React.StrictMode>
     <ErrorBoundary>
-      <GithubProvider>
-        <App />
-      </GithubProvider>
+      <Auth0Provider
+        domain='dev-y5k24h-n.eu.auth0.com'
+        clientId='gfTn4UOee39nwBuLVWapafXk91cDfOmi'
+        redirectUri={window.location.origin}
+        cacheLocation='localstorage'>
+        <GithubProvider>
+          <App />
+        </GithubProvider>
+      </Auth0Provider>
     </ErrorBoundary>
   </React.StrictMode>,
   document.getElementById('root')

@@ -4,9 +4,7 @@ import loadingGif from '../images/preloader.gif';
 import styled from 'styled-components';
 
 function AuthWrapper({ children }) {
-  const { isLoading, error, isAuthenticated, user } = useAuth0();
-
-  console.log({ isLoading, isAuthenticated, user });
+  const { isLoading, error } = useAuth0();
 
   if (isLoading) {
     return (

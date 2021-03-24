@@ -19,6 +19,9 @@ const initialState = {
   isLoading: false,
   isError: false,
   featured: [],
+  single_product: {},
+  sp_isLoading: false,
+  sp_isError: false,
 };
 
 const ProductsContext = React.createContext();
@@ -34,6 +37,16 @@ export const ProductsProvider = ({ children }) => {
     dispatch({ type: SIDEBAR_CLOSE });
   }
 
+  async function fetchSingleProduct(url) {
+    try {
+      dispatch({ type: GET_SINGLE_PRODUCT_BEGIN });
+      const response = await axios(url);
+      dispatch({ type: GET_SINGLE_PRODUCT_SUCCESS, payload: response.data });
+    } catch (error) {
+      dispatch({ type: GET_SINGLE_PRODUCT_ERROR });
+    }
+  }
+
   useEffect(() => {
     async function fetchProducts() {
       dispatch({ type: GET_PRODUCTS_BEGIN });
@@ -47,7 +60,8 @@ export const ProductsProvider = ({ children }) => {
   }, []);
 
   return (
-    <ProductsContext.Provider value={{ ...state, openSidebar, closeSidebar }}>
+    <ProductsContext.Provider
+      value={{ ...state, openSidebar, closeSidebar, fetchSingleProduct }}>
       {children}
     </ProductsContext.Provider>
   );

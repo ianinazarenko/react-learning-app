@@ -1,13 +1,64 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import { Link } from 'react-router-dom'
-import { FaCheck } from 'react-icons/fa'
-import { useCartContext } from '../context/cart_context'
-import AmountButtons from './AmountButtons'
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { FaCheck } from 'react-icons/fa';
+import { useCartContext } from '../context/cart_context';
+import AmountButtons from './AmountButtons';
 
-const AddToCart = () => {
-  return <h4>addToCart </h4>
-}
+const AddToCart = ({ product }) => {
+  const { id, stock, colors } = product;
+  const [mainColor, setMainColor] = useState(colors[0]);
+  const [amount, setAmount] = useState(1);
+
+  function decrease() {
+    setAmount((current) => {
+      if (current - 1 < 1) {
+        return 1;
+      } else {
+        return current - 1;
+      }
+    });
+  }
+
+  function increase() {
+    setAmount((current) => {
+      if (current + 1 > stock) {
+        return current;
+      } else {
+        return current + 1;
+      }
+    });
+  }
+
+  return (
+    <Wrapper>
+      <div className='colors'>
+        <span>colors :</span>
+        <div>
+          {colors.map((color, index) => {
+            return (
+              <button
+                key={index}
+                className={
+                  color === mainColor ? 'color-btn active' : 'color-btn'
+                }
+                style={{ background: color }}
+                onClick={() => setMainColor(colors[index])}>
+                {color === mainColor ? <FaCheck /> : null}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+      <div className='btn-container'>
+        <AmountButtons props={{ amount, increase, decrease }} />
+        <Link to='cart' className='btn'>
+          Add to cart
+        </Link>
+      </div>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.section`
   margin-top: 2rem;
@@ -53,5 +104,5 @@ const Wrapper = styled.section`
     margin-top: 1rem;
     width: 140px;
   }
-`
-export default AddToCart
+`;
+export default AddToCart;

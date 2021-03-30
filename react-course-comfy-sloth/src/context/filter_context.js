@@ -51,20 +51,40 @@ export const FilterProvider = ({ children }) => {
   }
 
   // update filters in state
-  function updateFilters(e) {}
+  function updateFilters(e) {
+    const name = e.target.name;
+    let value = e.target.value;
+    if (name === 'category') {
+      value = e.target.textContent;
+    }
+    if (name === 'color') {
+      value = e.target.dataset.color;
+    }
+    if (name === 'price') {
+      value = Number(value);
+    }
+    if (name === 'shipping') {
+      value = e.target.checked;
+    }
+    console.log(name, value);
+    dispatch({ type: UPDATE_FILTERS, payload: { name, value } });
+  }
 
   // clear all filters in state
-  function clearFilters() {}
+  function clearFilters() {
+    dispatch({ type: CLEAR_FILTERS });
+  }
 
   // useEffect for initial products loading
   useEffect(() => {
     dispatch({ type: LOAD_PRODUCTS, payload: products });
   }, [products]);
 
-  // useEffect for sort list
+  // useEffect for sort and filters
   useEffect(() => {
+    dispatch({ type: FILTER_PRODUCTS });
     dispatch({ type: SORT_PRODUCTS });
-  }, [products, state.sort]);
+  }, [products, state.sort, state.filters]);
 
   // render
   return (

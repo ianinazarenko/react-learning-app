@@ -26,7 +26,8 @@ const SingleProductPage = () => {
 
   useEffect(() => {
     fetchSingleProduct(`${url}${id}`);
-  }, []);
+    // eslint-disable-next-line
+  }, [id]);
 
   useEffect(() => {
     if (sp_isError) {
@@ -34,7 +35,7 @@ const SingleProductPage = () => {
         history.push('/');
       }, 3000);
     }
-  }, [sp_isError]);
+  }, [sp_isError, history]);
 
   if (sp_isLoading) {
     return <Loading />;

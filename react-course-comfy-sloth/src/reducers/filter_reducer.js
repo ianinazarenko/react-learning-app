@@ -1,4 +1,3 @@
-import { GiStaticWaves } from 'react-icons/gi';
 import {
   LOAD_PRODUCTS,
   SET_LISTVIEW,
@@ -77,7 +76,6 @@ const filter_reducer = (state, action) => {
       company,
       category,
       color,
-      min_price,
       max_price,
       price,
       shipping,

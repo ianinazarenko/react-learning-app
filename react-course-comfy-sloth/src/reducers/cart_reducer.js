@@ -1,7 +1,6 @@
 import {
   ADD_TO_CART,
   CLEAR_CART,
-  CLEAR_FILTERS,
   COUNT_CART_TOTALS,
   REMOVE_CART_ITEM,
   TOGGLE_CART_ITEM_AMOUNT,
@@ -24,7 +23,7 @@ const cart_reducer = (state, action) => {
           return item;
         }
       });
-      return { ...state, cart: [...state.cart, tempItem] };
+      return { ...state, cart: [...state.cart, tempCart] };
     } else {
       const newItem = {
         id: id + color,
@@ -65,9 +64,8 @@ const cart_reducer = (state, action) => {
           }
           return { ...item, amount: newAmount };
         }
-      } else {
-        return item;
       }
+      return item;
     });
     return { ...state, cart: tempCart };
   }
@@ -76,7 +74,6 @@ const cart_reducer = (state, action) => {
     const { total_items, total_amount } = state.cart.reduce(
       (total, cartItem) => {
         const { amount, price } = cartItem;
-        console.log(amount, price);
         total.total_items += amount;
         total.total_amount += price * amount;
         return total;
